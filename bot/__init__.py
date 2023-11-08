@@ -74,6 +74,7 @@ except:
 task_dict_lock = Lock()
 queue_dict_lock = Lock()
 qb_listener_lock = Lock()
+cpu_eater_lock = Lock()
 status_dict = {}
 task_dict = {}
 rss_dict = {}
@@ -450,17 +451,18 @@ with open("a2c.conf", "a+") as a:
 srun([bot_cache['pkgs'][0], "--conf-path=/usr/src/app/a2c.conf"])
 alive = Popen(["python3", "alive.py"])
 sleep(0.5)
-if ospath.exists("accounts.zip"):
+if ospath.exists('accounts.zip'):
     if ospath.exists('accounts'):
         srun(["rm", "-rf", "accounts"])
     srun(["7z", "x", "-o.", "-aoa", "accounts.zip", "accounts/*.json"])
     srun(["chmod", "-R", "777", "accounts"])
-    osremove("accounts.zip")
+    osremove('accounts.zip')
 if not ospath.exists('accounts'):
     config_dict['USE_SERVICE_ACCOUNTS'] = False
 sleep(0.5)
 
 aria2 = ariaAPI(ariaClient(host="http://localhost", port=6800, secret=""))
+
 
 def get_client():
     return qbClient(
