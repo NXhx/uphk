@@ -2,7 +2,7 @@ from os import path as ospath
 from aiofiles.os import remove as aioremove, path as aiopath, mkdir
 from time import time
 from re import search as re_search
-from asyncio import create_subprocess_exec
+from asyncio import create_subprocess_exec, gather
 from asyncio.subprocess import PIPE
 from PIL import Image
 from aioshutil import move
@@ -26,12 +26,14 @@ def getSplitSizeBytes(size):
     return size
 
 
-async def createThumb(msg):
+async def createThumb(msg, _id=""):
+    if not _id:
+        _id = msg.id
     path = "Thumbnails/"
     if not await aiopath.isdir(path):
         await mkdir(path)
     photo_dir = await msg.download()
-    des_dir = f"{path}{msg.id}.jpg"
+    des_dir = f"{path}{_id}.jpg"
     await sync_to_async(Image.open(photo_dir).convert("RGB").save, des_dir, "JPEG")
     await aioremove(photo_dir)
     return des_dir
@@ -426,7 +428,9 @@ async def createSampleVideo(
         if oneFile:
             newDir = input_file.rsplit(".", 1)[0]
             await mkdir(newDir)
-            await move(input_file, f"{newDir}/{name}")
-            await move(output_file, f"{newDir}/SAMPLE.{name}")
+            await gather(
+                move(input_file, f"{newDir}/{name}"),
+                move(output_file, f"{newDir}/SAMPLE.{name}"),
+            )
             return newDir
         return True
