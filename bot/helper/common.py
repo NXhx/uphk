@@ -276,7 +276,7 @@ class TaskConfig:
                 )
 
             if is_telegram_link(self.thumb):
-                msg = await get_tg_link_message(self.thumb)
+                msg = (await get_tg_link_message(self.thumb))[0]
                 self.thumb = await createThumb(msg) if msg.photo or msg.document else ""
 
     async def getTag(self, text: list):
@@ -495,7 +495,7 @@ class TaskConfig:
             self.newDir = f"{self.dir}10000"
             up_path = f"{self.newDir}/{self.name}.zip"
         else:
-            up_path = f"{up_path}.zip"
+            up_path = f"{dl_path}.zip"
         async with task_dict_lock:
             task_dict[self.mid] = ZipStatus(self, size, gid)
         if self.equalSplits:
