@@ -457,8 +457,8 @@ if ospath.exists("accounts.zip"):
     srun(["7z", "x", "-o.", "-aoa", "accounts.zip", "accounts/*.json"])
     srun(["chmod", "-R", "777", "accounts"])
     osremove("accounts.zip")
-if not ospath.exists('accounts'):
-    config_dict['USE_SERVICE_ACCOUNTS'] = False
+if not ospath.exists("accounts"):
+    config_dict["USE_SERVICE_ACCOUNTS"] = False
 sleep(0.5)
 
 aria2 = ariaAPI(ariaClient(host="http://localhost", port=6800, secret=""))
