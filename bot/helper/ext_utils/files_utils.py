@@ -74,7 +74,7 @@ async def clean_target(path):
         try:
             if await aiopath.isdir(path):
                 await aiormtree(path)
-            elif await aiopath.isfile(path):
+            else:
                 await aioremove(path)
         except Exception as e:
             LOGGER.error(str(e))
@@ -89,22 +89,14 @@ async def clean_download(path):
             LOGGER.error(str(e))
 
 
-async def start_cleanup():
-    get_client().torrents_delete(torrent_hashes="all")
-    try:
-        await aiormtree(DOWNLOAD_DIR)
-    except Exception as e:
-        LOGGER.error(str(e))
-    await makedirs(DOWNLOAD_DIR, exist_ok=True)
-
-
-def clean_all():
+async def clean_all():
     aria2.remove_all(True)
     get_client().torrents_delete(torrent_hashes="all")
     try:
-        rmtree(DOWNLOAD_DIR)
-    except Exception as e:
-        LOGGER.error(str(e))
+        await aiormtree(DOWNLOAD_DIR)
+    except:
+        pass
+    await makedirs(DOWNLOAD_DIR, exist_ok=True)
 
 
 def exit_clean_up(signal, frame):
