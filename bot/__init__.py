@@ -453,7 +453,6 @@ with open("a2c.conf", "a+") as a:
     a.write(f"bt-tracker=[{trackers}]")
 srun([bot_cache['pkgs'][0], "--conf-path=/usr/src/app/a2c.conf"])
 alive = Popen(["python3", "alive.py"])
-sleep(0.5)
 if ospath.exists("accounts.zip"):
     if ospath.exists("accounts"):
         srun(["rm", "-rf", "accounts"])
