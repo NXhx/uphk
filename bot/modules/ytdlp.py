@@ -273,14 +273,15 @@ class YtDlp(TaskListener):
             sameDir = {}
         if bulk is None:
             bulk = []
-        super().__init__(message)
+        self.message = message
         self.client = client
-        self.isLeech = isLeech
-        self.isYtDlp = True
         self.multiTag = multiTag
         self.options = options
         self.sameDir = sameDir
         self.bulk = bulk
+        super().__init__()
+        self.isYtDlp = True
+        self.isLeech = isLeech
 
     @new_task
     async def newEvent(self):
@@ -368,7 +369,7 @@ class YtDlp(TaskListener):
 
         if not is_url(self.link):
             await sendMessage(
-                self.message, "Open this link for usage help!", COMMAND_USAGE["yt"]
+                self.message, COMMAND_USAGE["yt"][0], COMMAND_USAGE["yt"][1]
             )
             self.removeFromSameDir()
             return
