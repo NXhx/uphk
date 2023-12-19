@@ -23,6 +23,7 @@ async def add_aria2c_download(listener, path, filename, header, ratio, seed_time
     a2c_opt = {**aria2_options}
     [a2c_opt.pop(k) for k in aria2c_global if k in aria2_options]
     a2c_opt["dir"] = path
+    a2c_opt["user-agent"] = user_agent
     if listener.name:
         a2c_opt["out"] = listener.name
     if header:
