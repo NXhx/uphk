@@ -88,7 +88,6 @@ def direct_link_generator(link):
             "doods.pro",
             "ds2play.com",
             "dood.meme",
-            "poop.cx",
         ]
     ):
         return doods(link)
