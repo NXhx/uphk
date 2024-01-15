@@ -117,6 +117,7 @@ def direct_link_generator(link):
             "teraboxapp.com",
             "1024tera.com",
             "terabox.app",
+            "gibibox.com",
         ]
     ):
         return terabox(link)
