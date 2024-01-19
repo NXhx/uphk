@@ -504,7 +504,8 @@ bot = tgClient(
     TELEGRAM_HASH,
     bot_token=BOT_TOKEN,
     workers=1000,
-    parse_mode=enums.ParseMode.HTML
+    parse_mode=enums.ParseMode.HTML,
+    max_concurrent_transmissions=10,
 ).start()
 bot_loop = bot.loop
 
