@@ -479,7 +479,7 @@ def uploadee(url):
 
 
 def terabox(url):
-    if not path.isfile("terabox.txt"):
+    if not ospath.isfile("terabox.txt"):
         raise DirectDownloadLinkException("ERROR: terabox.txt not found")
     try:
         jar = MozillaCookieJar("terabox.txt")
