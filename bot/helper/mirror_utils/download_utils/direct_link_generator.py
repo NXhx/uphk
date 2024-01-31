@@ -518,13 +518,13 @@ def terabox(url):
                 if not folderPath:
                     if not details["title"]:
                         details["title"] = content["server_filename"]
-                        newFolderPath = path.join(details["title"])
+                        newFolderPath = ospath.join(details["title"])
                     else:
-                        newFolderPath = path.join(
+                        newFolderPath = ospath.join(
                             details["title"], content["server_filename"]
                         )
                 else:
-                    newFolderPath = path.join(folderPath, content["server_filename"])
+                    newFolderPath = ospath.join(folderPath, content["server_filename"])
                 __fetch_links(session, content["path"], newFolderPath)
             else:
                 if not folderPath:
@@ -534,7 +534,7 @@ def terabox(url):
                 item = {
                     "url": content["dlink"],
                     "filename": content["server_filename"],
-                    "path": path.join(folderPath),
+                    "path": ospath.join(folderPath),
                 }
                 if "size" in content:
                     size = content["size"]
