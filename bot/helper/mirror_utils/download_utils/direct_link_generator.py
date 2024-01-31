@@ -1,7 +1,7 @@
 from hashlib import sha256
 from http.cookiejar import MozillaCookieJar
 from json import loads
-from os import path
+from os import path as ospath
 from re import findall, match, search
 from time import sleep
 from urllib.parse import parse_qs, urlparse
