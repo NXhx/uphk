@@ -769,7 +769,7 @@ def linkBox(url: str):
                 "https://www.linkbox.to/api/file/detail", params={"itemId": itemId}
             ).json()
         except Exception as e:
-            raise DirectDownloadLinkException(f"ERROR: {e.__class__.__name__}")
+            raise DirectDownloadLinkException(f"ERROR: {e.__class__.__name__}") from e
         data = _json["data"]
         if not data:
             if "msg" in _json:
@@ -807,7 +807,7 @@ def linkBox(url: str):
                 "https://www.linkbox.to/api/file/share_out_list", params=params
             ).json()
         except Exception as e:
-            raise DirectDownloadLinkException(f"ERROR: {e.__class__.__name__}")
+            raise DirectDownloadLinkException(f"ERROR: {e.__class__.__name__}") from e
         data = _json["data"]
         if not data:
             if "msg" in _json:
@@ -823,9 +823,9 @@ def linkBox(url: str):
         for content in contents:
             if content["type"] == "dir" and "url" not in content:
                 if not folderPath:
-                    newFolderPath = path.join(details["title"], content["name"])
+                    newFolderPath = ospath.join(details["title"], content["name"])
                 else:
-                    newFolderPath = path.join(folderPath, content["name"])
+                    newFolderPath = ospath.join(folderPath, content["name"])
                 if not details["title"]:
                     details["title"] = content["name"]
                 __fetch_links(session, content["id"], newFolderPath)
@@ -838,7 +838,7 @@ def linkBox(url: str):
                 ):
                     filename += f".{sub_type}"
                 item = {
-                    "path": path.join(folderPath),
+                    "path": ospath.join(folderPath),
                     "filename": filename,
                     "url": content["url"],
                 }
