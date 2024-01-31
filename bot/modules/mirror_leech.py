@@ -302,12 +302,6 @@ class Mirror(TaskListener):
         elif self.isQbit:
             await add_qb_torrent(self, path, ratio, seed_time)
         else:
-            if link.endswith('/'):
-            msg = f"<b>Hey {tag}</b>.\n\nYour link ended with /.Maybe its a index folder link.\n\n"
-            msg += f"To mirror or leech index folder reply your link with <code>mirror{config_dict['CMD_SUFFIX']} -b</code> or <code>leech{config_dict['CMD_SUFFIX']} -b</code>"
-            await sendMessage(message, msg)
-            return
-
             ussr = args["-au"]
             pssw = args["-ap"]
             if ussr or pssw:
