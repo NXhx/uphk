@@ -90,6 +90,7 @@ def direct_link_generator(link):
             "dood.meme",
             "do0od.com",
             "d0000d.com",
+            "d000d.com",
         ]
     ):
         return doods(link)
