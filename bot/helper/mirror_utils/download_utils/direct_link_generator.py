@@ -206,7 +206,7 @@ def mediafire(url, session=None):
         html = HTML(session.get(url).text)
     except Exception as e:
         session.close()
-        raise DirectDownloadLinkException(f"ERROR: {e.__class__.__name__}")
+        raise DirectDownloadLinkException(f"ERROR: {e.__class__.__name__}") from e
     if error := html.xpath('//p[@class="notranslate"]/text()'):
         session.close()
         raise DirectDownloadLinkException(f"ERROR: {error[0]}")
