@@ -1,3 +1,5 @@
+import requests
+
 from hashlib import sha256
 from http.cookiejar import MozillaCookieJar
 from json import loads
@@ -1230,31 +1232,18 @@ def send_cm(url):
 
 
 def doods(url):
-    with create_scraper() as session:
-        try:
-            req = session.get(f"https://api.pakai.eu.org/dood?url={url}")
-            req.raise_for_status()  # Raises HTTPError for bad responses
-
-            jresp = req.json()
-            success = jresp.get("success", False)
-            if not success:
-                raise DirectDownloadLinkException(jresp.get("message"))
-
-            data = jresp.get("data")
-            LOGGER.info(data)
-            folder = jresp.get("folder")
-            if data:
-                if folder:
-                    origin_links = [f"<code>{item['origin']}</code>" for item in data]
-                    raise DirectDownloadLinkException("\n".join(origin_links))
-                else:
-                    # Handle the non-folder response as before
-                    name = data.get("title")
-                    referer = data.get("referer")
-                    link = data.get("direct_link")
-                    return (link, f'Referer: {referer}', name)
-        except Exception as e:
-            raise DirectDownloadLinkException(f"{e}")
+    if "/e/" in url:
+        url = url.replace("/e/", "/d/")
+    parsed_url = urlparse(url)
+    api_url = f"https://api.pakai.eu.org/dood?url={url}"
+    response = requests.get(api_url)
+    if response.status_code != 200:
+        raise DirectDownloadLinkException("ERROR: Failed to fetch direct link from API")
+    json_data = response.json()
+    if direct_link := json_data.get("data", {}).get("direct_link"):
+        return f"https://dd-cdn.pakai.eu.org/download?url={direct_link}"
+    else:
+        raise DirectDownloadLinkException("ERROR: Direct link not found in API response")
 
 def easyupload(url):
     if "::" in url:
