@@ -272,16 +272,17 @@ class Mirror(TaskListener):
             if content_type is None or re_match(r"text/html|text/plain", content_type):
                 try:
                     self.link = await sync_to_async(direct_link_generator, self.link)
-                    LOGGER.info(self.link)
+                    #LOGGER.info(self.link)
                     if isinstance(self.link, tuple):
-                        self.link, headers, self.name = self.link
+                        self.link, headers = self.link
+                        #self.link, headers, self.name = self.link
                     elif isinstance(self.link, str):
                         LOGGER.info(f"Generated link: {self.link}")
                 except DirectDownloadLinkException as e:
                     e = str(e)
-                    if e:
-                        await sendMessage(self.message, e)
-                        return
+                    #if e:
+                        #await sendMessage(self.message, e)
+                        #return
                     if "This link requires a password!" not in e:
                         LOGGER.info(e)
                     if e.startswith("ERROR:"):
