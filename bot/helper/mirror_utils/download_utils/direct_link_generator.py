@@ -1232,8 +1232,8 @@ def send_cm(url):
 
 
 def doods(url):
-    if "/e/" in url:
-        url = url.replace("/e/", "/d/")
+    #if "/e/" in url:
+        #url = url.replace("/e/", "/d/")
     parsed_url = urlparse(url)
     api_url = f"https://api.pakai.eu.org/dood?url={url}"
     response = requests.get(api_url)
